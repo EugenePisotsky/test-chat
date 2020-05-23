@@ -30,6 +30,7 @@ export class WsChatAdapter extends BaseChatAdapter implements ChatAdapter {
 
         try {
             const messages = JSON.parse(history)
+
             return limit ? messages.slice(Math.max(0, messages.length - limit!)) : messages
         } catch (e) {
             return []
@@ -37,7 +38,7 @@ export class WsChatAdapter extends BaseChatAdapter implements ChatAdapter {
     }
 
     addMessage(message: ChatMessage): void {
-        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify([...this.getHistory(), message]))
+        this.updateHistory([...this.getHistory(), message])
 
         this.sock?.send(JSON.stringify(message))
     }
@@ -45,9 +46,13 @@ export class WsChatAdapter extends BaseChatAdapter implements ChatAdapter {
     removeMessageFromHistory(id: number) {
         const history = this.getHistory()
         const updatedMessages = history.filter(item => item.id !== id)
-        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updatedMessages))
+        this.updateHistory(updatedMessages)
 
         return updatedMessages
+    }
+
+    updateHistory(messages: ChatMessage[]) {
+        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(messages))
     }
 
 }
