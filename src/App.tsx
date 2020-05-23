@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Redirect, Route, Switch } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
+import './App.css'
+import { ChatPage } from './components/pages/chat/ChatPage'
+import { AppBarComponent } from './components/partials/AppBarComponent'
+import { HistoryPage } from './components/pages/history/HistoryPage'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <AppBarComponent />
+
+            <Switch>
+                <Route path={`/history`} component={HistoryPage} />
+                <Route path={`/chat`} component={ChatPage} />
+                <Route path={`/`} render={props => <Redirect to={`/chat`} />} />
+            </Switch>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
