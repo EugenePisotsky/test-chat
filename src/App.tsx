@@ -1,7 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
-import './App.css'
 import { ChatPage } from './components/pages/chat/ChatPage'
 import { AppBarComponent } from './components/partials/AppBarComponent'
 import { HistoryPage } from './components/pages/history/HistoryPage'
